@@ -344,7 +344,5 @@ Framework must support these patterns as first-class:
 * **Undo where possible**
 * **History thumbnails + restore focus**
 
----
 
-If you want, I can turn this into a **generator-friendly “scaffold spec”** next: a small set of modules + interfaces (IntentRouter, Orchestrator, Renderer, CapabilityRegistry, PolicyEngine, MomentStore) and a folder structure that a codegen tool could spit out for a Node/Electron or web runtime.
 
