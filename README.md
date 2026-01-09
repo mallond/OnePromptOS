@@ -12,6 +12,19 @@ Below is a **framework specification** for **One Prompt OS** (project name: **Fl
 
 # FluxyView: One Prompt OS — Framework Specification (v0.1)
 
+## Vision: Interface as Intent
+
+> In the neon-lit corridors of 2049, interfaces have shed their chrome and widgets, replaced by conversational depth where intent flows like rain through cityscape holograms—you don't navigate pages, you navigate meaning, each spoken command or tapped gesture summoning ephemeral information planes that materialize, serve their purpose, and dissolve back into the digital ether. 
+
+OnePromptOS embodies this post-screen paradigm: no persistent UI scaffolding cluttering your field of view, no nested menus hiding what you need six taps deep, just a single prompt bar hovering at the edge of consciousness and contextual action chips that appear like Voight-Kampff responses—immediate, purposeful, dangerous operations glowing red in the peripheral vision. Information exists in moments, not pages; each interaction is a question answered, a task completed, a decision made, then gone—the system remembers so you don't have to wade through yesterday's chrome to find tomorrow's answers. 
+
+This is computing as it should be in an age where AI understands intent: invisible until needed, prescient without being invasive, safe by design with explicit human confirmation gates on anything that matters, voice-native but gesture-fluent, accessible to those who can't pixel-hunt through traditional UIs, and utterly formless because in the future, **the interface isn't what you see—it's what you mean.**
+
+---
+
+### Core Principle
+**No forms. No pages. Only Prompt + Pixels + Actions.**
+
 ## 1) Product definition
 
 **One Prompt OS** is a runtime shell where:
