@@ -1,3 +1,4 @@
+<img width="1536" height="1024" alt="Image" src="https://github.com/user-attachments/assets/700d7ecb-d1e4-4b5e-bfdd-71b3e0cbbcf6" />
 # OnePromptOS
 FluxyView: One Prompt OS — Framework Specification (v0.1)
 
