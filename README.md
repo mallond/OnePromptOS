@@ -4,7 +4,7 @@
 FluxyView: One Prompt OS — Framework Specification (v0.1)
 
 Claude Shares  
-[OnePromptOS Interactive Demo - First Go](https://claude.ai/public/artifacts/66362c18-756a-41fa-b39f-31c07f0414b9)
+[OnePromptOS Interactive Demo - First Go](https://claude.ai/public/artifacts/66362c18-756a-41fa-b39f-31c07f0414b9)  
 [OnePromptOS Interactive Demo - MCP Search, Runnable](https://claude.ai/public/artifacts/324e7ccb-6944-47c9-89db-761edb106d49)  
 [OnePromptOS Interactive Demo - MCP Search, Claude You can Customize](https://claude.ai/public/artifacts/324e7ccb-6944-47c9-89db-761edb106d49)  
 
