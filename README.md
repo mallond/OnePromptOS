@@ -1,7 +1,7 @@
 # OnePromptOS
 FluxyView: One Prompt OS — Framework Specification (v0.1)
 
-Claude Shares
+Claude Shares  
 [OnePromptOS Interactive Demo - First Go](https://claude.ai/public/artifacts/66362c18-756a-41fa-b39f-31c07f0414b9)
 
 Below is a **framework specification** for **One Prompt OS** (project name: **FluxyView**) designed around your rule:
