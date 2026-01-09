@@ -20,5 +20,8 @@ Pricing (API token costs):
 https://platform.openai.com/docs/pricing
 https://openai.com/api/pricing/
 
-UI Guidlines
+UX Guidlines  
+https://developers.openai.com/apps-sdk/concepts/ux-principles
+
+UI Guidlines  
 https://developers.openai.com/apps-sdk/concepts/ui-guidelines
