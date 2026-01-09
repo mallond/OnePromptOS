@@ -19,3 +19,6 @@ https://developers.openai.com/apps-sdk/app-submission-guidelines/
 Pricing (API token costs):
 https://platform.openai.com/docs/pricing
 https://openai.com/api/pricing/
+
+UI Guidlines
+https://developers.openai.com/apps-sdk/concepts/ui-guidelines
