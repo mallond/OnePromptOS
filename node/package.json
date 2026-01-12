@@ -1,0 +1,10 @@
+{
+  "name": "mcp-echo-server",
+  "version": "0.1.0",
+  "description": "Minimal MCP stdio echo server",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "license": "MIT"
+}
