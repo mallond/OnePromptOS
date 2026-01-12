@@ -1,0 +1,11 @@
+{
+  "name": "mock-chat-app",
+  "version": "0.1.0",
+  "description": "Mock ChatGPT App scaffold wired to a local HTTP mock server",
+  "apiBaseUrl": "http://127.0.0.1:8787",
+  "endpoints": {
+    "mcp": "/mcp",
+    "chat": "/chat",
+    "mockResponse": "/mock-response"
+  }
+}

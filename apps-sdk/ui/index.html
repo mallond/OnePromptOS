@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mock Chat App UI</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="hero">
+        <p class="eyebrow">Mock UI</p>
+        <h1>Chat App Scaffold</h1>
+        <p class="subhead">
+          A minimal UI wired to your local mock server. Use this to validate flows
+          before you integrate a real model.
+        </p>
+      </header>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Chat</h2>
+          <span class="pill" id="api-status">API: not set</span>
+        </div>
+        <div class="chat-log" id="chat-log">
+          <div class="message system">Ready when you are.</div>
+        </div>
+        <div class="chat-input">
+          <input id="chat-input" type="text" placeholder="Type a message" />
+          <button id="send-btn">Send</button>
+        </div>
+      </section>
+
+      <section class="panel split">
+        <div>
+          <h2>Mock Reply</h2>
+          <p class="muted">Set a canned response for the chat endpoint.</p>
+        </div>
+        <div class="mock-controls">
+          <input id="mock-input" type="text" placeholder="hello from mock" />
+          <div class="actions">
+            <button id="set-mock">Set</button>
+            <button id="clear-mock" class="ghost">Clear</button>
+          </div>
+          <p class="muted" id="mock-status">Current: none</p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Endpoints</h2>
+        <ul class="endpoint-list">
+          <li><code>POST /mcp</code> MCP JSON-RPC endpoint</li>
+          <li><code>POST /chat</code> Mock chat HTTP endpoint</li>
+          <li><code>POST /mock-response</code> Set mock reply</li>
+          <li><code>GET /mock-response</code> Get mock reply</li>
+          <li><code>DELETE /mock-response</code> Clear mock reply</li>
+          <li><code>GET /health</code> Health check</li>
+        </ul>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

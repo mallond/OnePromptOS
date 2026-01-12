@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Mock chat</title>
+    <style>
+      :root {
+        color: #101010;
+        font-family: "Space Grotesk", "Trebuchet MS", sans-serif;
+      }
+
+      html,
+      body {
+        width: 100%;
+        min-height: 100%;
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        padding: 16px;
+        background: #f4efe7;
+      }
+
+      main {
+        width: 100%;
+        max-width: 420px;
+        min-height: 320px;
+        margin: 0 auto;
+        background: #fff;
+        border-radius: 18px;
+        padding: 20px;
+        box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+        display: grid;
+        gap: 16px;
+      }
+
+      h2 {
+        margin: 0;
+        font-size: 1.25rem;
+      }
+
+      .meta {
+        font-size: 0.85rem;
+        color: #6f6f6f;
+      }
+
+      .log {
+        border-radius: 12px;
+        background: #f6f2ea;
+        padding: 12px;
+        min-height: 140px;
+        display: grid;
+        gap: 8px;
+        overflow-y: auto;
+      }
+
+      .bubble {
+        padding: 10px 12px;
+        border-radius: 12px;
+        max-width: 75%;
+      }
+
+      .bubble.user {
+        background: #ffe2c8;
+        justify-self: end;
+      }
+
+      .bubble.bot {
+        background: #e5eef2;
+      }
+
+      form {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 8px;
+      }
+
+      input {
+        border-radius: 10px;
+        border: 1px solid #d1c7bc;
+        padding: 10px 12px;
+        font-size: 0.95rem;
+      }
+
+      button {
+        border: none;
+        border-radius: 10px;
+        background: #d0643b;
+        color: white;
+        font-weight: 600;
+        padding: 0 16px;
+        cursor: pointer;
+      }
+
+      .row {
+        display: grid;
+        gap: 8px;
+      }
+
+      .row button {
+        background: #312820;
+      }
+
+      .row button.secondary {
+        background: transparent;
+        color: #312820;
+        border: 1px solid #cbb9a8;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h2>Mock chat</h2>
+        <div class="meta" id="api-status">API: not set</div>
+      </header>
+
+      <section class="log" id="chat-log">
+        <div class="bubble bot">Ready for a message.</div>
+      </section>
+
+      <form id="chat-form" autocomplete="off">
+        <input id="chat-input" name="message" placeholder="Type a message" />
+        <button type="submit">Send</button>
+      </form>
+
+      <section class="row">
+        <input id="mock-input" placeholder="Set mock reply" />
+        <div class="row" style="grid-template-columns: 1fr 1fr;">
+          <button id="set-mock" type="button">Set mock</button>
+          <button id="clear-mock" class="secondary" type="button">Clear</button>
+        </div>
+        <div class="meta" id="mock-status">Mock: none</div>
+      </section>
+    </main>
+
+    <script type="module">
+      const chatLog = document.querySelector("#chat-log");
+      const chatForm = document.querySelector("#chat-form");
+      const chatInput = document.querySelector("#chat-input");
+      const apiStatus = document.querySelector("#api-status");
+      const mockInput = document.querySelector("#mock-input");
+      const setMockBtn = document.querySelector("#set-mock");
+      const clearMockBtn = document.querySelector("#clear-mock");
+      const mockStatus = document.querySelector("#mock-status");
+
+      const mcpUrl =
+        new URLSearchParams(window.location.search).get("mcp") ??
+        "http://localhost:8787/mcp";
+      let initialized = false;
+      let mcpSessionId = null;
+
+      apiStatus.textContent = `API: ${mcpUrl}`;
+
+      const addBubble = (text, role) => {
+        const bubble = document.createElement("div");
+        bubble.className = `bubble ${role}`;
+        bubble.textContent = text;
+        chatLog.appendChild(bubble);
+        chatLog.scrollTop = chatLog.scrollHeight;
+      };
+
+      const callMcp = async (method, params) => {
+        const response = await fetch(mcpUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json, text/event-stream",
+            ...(mcpSessionId ? { "Mcp-Session-Id": mcpSessionId } : {}),
+          },
+          body: JSON.stringify({
+            jsonrpc: "2.0",
+            id: crypto.randomUUID(),
+            method,
+            params,
+          }),
+        });
+        const sessionHeader = response.headers.get("mcp-session-id");
+        if (sessionHeader) {
+          mcpSessionId = sessionHeader;
+        }
+        return response.json();
+      };
+
+      const ensureInitialized = async () => {
+        if (initialized) return;
+        await callMcp("initialize", {
+          protocolVersion: "2024-11-05",
+          capabilities: {},
+          clientInfo: { name: "mock-chat-widget", version: "0.1.0" },
+        });
+        initialized = true;
+      };
+
+      const updateMockStatus = (payload) => {
+        const value = payload?.structuredContent?.mockReply;
+        mockStatus.textContent = `Mock: ${value ?? "none"}`;
+      };
+
+      chatForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const message = chatInput.value.trim();
+        if (!message) return;
+        chatInput.value = "";
+        addBubble(message, "user");
+
+        try {
+          await ensureInitialized();
+          const response = await callMcp("tools/call", {
+            name: "chat",
+            arguments: { message },
+          });
+          const result = response?.result ?? response;
+          const reply = result?.structuredContent?.reply ?? "No reply.";
+          addBubble(reply, "bot");
+          updateMockStatus(result);
+        } catch {
+          addBubble("Request failed.", "bot");
+        }
+      });
+
+      setMockBtn.addEventListener("click", async () => {
+        const reply = mockInput.value.trim();
+        mockInput.value = "";
+        try {
+          await ensureInitialized();
+          const response = await callMcp("tools/call", {
+            name: "set_mock_reply",
+            arguments: { reply },
+          });
+          updateMockStatus(response?.result ?? response);
+        } catch {
+          mockStatus.textContent = "Mock: error";
+        }
+      });
+
+      clearMockBtn.addEventListener("click", async () => {
+        try {
+          await ensureInitialized();
+          const response = await callMcp("tools/call", {
+            name: "set_mock_reply",
+            arguments: { reply: "" },
+          });
+          updateMockStatus(response?.result ?? response);
+        } catch {
+          mockStatus.textContent = "Mock: error";
+        }
+      });
+    </script>
+  </body>
+</html>
